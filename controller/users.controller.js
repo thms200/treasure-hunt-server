@@ -1,6 +1,6 @@
 const User = require('../models/Users');
 const jwt = require('jsonwebtoken');
-const { errMessage } = require('../constants');
+const { errorMsg } = require('../constants');
 
 exports.getLogin = async (req, res) => {
   try {
@@ -11,16 +11,18 @@ exports.getLogin = async (req, res) => {
     const payload = {};
     if (!user) {
       const newUser = await User.create({ email, picture_url, name });
-      if (!newUser) return res.json({ result: 'ng', errMessage: errMessage.invalidSignup });
+      if (!newUser) return res.json({ result: 'ng', errMessage: errorMsg.invalidSignup });
       payload.name = newUser.name;
       payload.picture = newUser.picture_url;
+      payload.id = newUser._id;
     } else  {
       payload.name = user.name;
       payload.picture = user.picture_url;
+      payload.id = user._id;
     }
     const token = jwt.sign(payload, secretKey, options);
     return res.json({ result: 'ok', token });
   } catch(err) {
-    return res.json({ result: 'ng', errMessage: errMessage.invalidLogin });
+    return res.json({ result: 'ng', errMessage: errorMsg.invalidLogin });
   }
 };

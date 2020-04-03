@@ -3,7 +3,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const createError = require('http-errors');
-const { errMessage } = require('./constants');
+const { errorMsg } = require('./constants');
 
 const app = express();
 
@@ -24,12 +24,13 @@ app.use('/api/users', require('./routes/users'));
 app.use('/api/treasures', require('./routes/treasures'));
 
 app.use((req, res, next) => {
-  next(createError(404), errMessage.invalidUrl);
+  next(createError(404), errorMsg.invalidUrl);
 });
 
 app.use((err, req, res) => {
   res.status(err.status || 500);
-  res.send(err.message ? { errMessage: err.message } : { errMessage: errMessage.generalError });
+  const errMessage = err.message || errorMsg.generalError;
+  res.json({ errMessage });
 });
 
 module.exports = app;
