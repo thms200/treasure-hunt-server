@@ -1,11 +1,13 @@
 require('dotenv').config();
 const express = require('express');
+const cors = require('cors');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const createError = require('http-errors');
 const { errorMsg } = require('./constants');
 
 const app = express();
+app.use(cors());
 
 mongoose.connect(process.env.ATLAS_URI, {
   useNewUrlParser: true,
