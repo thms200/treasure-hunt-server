@@ -14,10 +14,10 @@ const uploadImg = multer({
     bucket: 'my-treasure-hunt',
     acl: 'public-read-write',
     contentType: multerS3.AUTO_CONTENT_TYPE,
-    metadata: function (req, file, cb) {
+    metadata: function(req, file, cb) {
       cb(null, Object.assign({}, req.body));
     },
-    key: function (req, file, cb) {
+    key: function(req, file, cb) {
       cb(null, file.originalname);
     }
   })

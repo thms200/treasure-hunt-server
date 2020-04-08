@@ -2,7 +2,7 @@ const User = require('../models/Users');
 const jwt = require('jsonwebtoken');
 const { errorMsg } = require('../constants');
 
-exports.getLogin = async (req, res) => {
+exports.getLogin = async(req, res) => {
   try {
     const { email, picture_url, name } = req.body;
     const user = await User.findOne({ email });
@@ -27,7 +27,7 @@ exports.getLogin = async (req, res) => {
   }
 };
 
-exports.getAuth = async (req, res) => {
+exports.getAuth = async(req, res) => {
   try {
     const token = req.headers['x-access-token'].split('Bearer')[1].trim();
     if (!token) return res.status(400).json({ result: 'ng', errMessage: errorMsg.invalidLogin });

@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 const createError = require('http-errors');
 const { errorMsg } = require('../constants');
 
-const ensureAuthenticated = async (req, res, next) => {
+const ensureAuthenticated = async(req, res, next) => {
   try {
     const token = req.headers['x-access-token'].split('Bearer')[1].trim();
     if (!token) return next(createError(400), errorMsg.invalidToken);
