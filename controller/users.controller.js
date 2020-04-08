@@ -1,8 +1,8 @@
-const User = require('../models/Users');
 const jwt = require('jsonwebtoken');
+const User = require('../models/Users');
 const { errorMsg } = require('../constants');
 
-exports.getLogin = async(req, res) => {
+exports.getLoginOrSignup = async(req, res) => {
   try {
     const { email, picture_url, name } = req.body;
     const user = await User.findOne({ email });
