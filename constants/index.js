@@ -6,6 +6,16 @@ const errorMsg = {
   nothingToken: 'We can\'t find a token. Please login again.',
   tokenExpired: 'You should login again because login valid time is expired',
   invalidToken: 'There was a error with login. Please login again.',
+  invalidSave: 'We can\'t save for unknown reasons',
+  invalidImgs: 'We can\'t get pictures or We can\'t save pictures for unknown reasons',
+  invalidCategory: 'There is a invalid treasure category. Try again.',
+  noneCountry: 'There isn\'t a selected country. Try again.',
+  noneName: 'There isn\'t a treasure name. Try again.',
+  invalidExpiration: 'Try again. Expiration must be later than now',
+  noneLocation: 'We can\t get a treasure location Try again',
+  noneDescription: 'Let me know about your treasure. Anything!.',
+  nonePictures: 'You should take pictures about location of treasure. Click "Camera" Or "Gallery".',
+  noneMap: 'You should inputed a your treasure location. Click "Map" button, and confirm location.',
 };
 
 module.exports = { errorMsg };

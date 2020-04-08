@@ -32,7 +32,7 @@ app.use((req, res, next) => {
 app.use((err, req, res) => {
   res.status(err.status || 500);
   const errMessage = err.message || errorMsg.generalError;
-  res.json({ errMessage });
+  res.send({ errMessage });
 });
 
 module.exports = app;
