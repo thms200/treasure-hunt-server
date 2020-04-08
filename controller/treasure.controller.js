@@ -1,7 +1,7 @@
 const Treasure = require('../models/Treasures');
 const { errorMsg } = require('../constants');
 const { getImgUrl } = require('../middlewares/uploadImg');
-const { checkValidation } = require('../util');
+const { checkValidation, processTreasureList, processSelectedTreasure } = require('../util');
 
 exports.saveTreasures = async(req, res) => {
   try {
@@ -41,7 +41,20 @@ exports.getTreasures = async(req, res) => {
       treasures = await Treasure.find({ category, 'expiration': { $gte: today } }).populate('registered_by');
     }
 
+    treasures = processTreasureList(treasures);
     return res.status(200).send(treasures);
+  } catch(err) {
+    return res.status(404).json({ result: 'ng', errMessage: errorMsg.generalError });
+  }
+};
+
+exports.getSelectedTreasure = async(req, res) => {
+  try {
+    const treasureId = req.params.treasure_id;
+    const treasure = await Treasure.findById({ _id: treasureId }).populate('registered_by', 'name');
+    if (!treasure) return res.status(404).json({ result: 'ng', errMessage: errorMsg.invalideSelectedTreasure });
+
+    return res.status(200).send(treasure);
   } catch(err) {
     return res.status(404).json({ result: 'ng', errMessage: errorMsg.generalError });
   }

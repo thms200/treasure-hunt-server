@@ -17,6 +17,7 @@ const errorMsg = {
   nonePictures: 'You should take pictures about location of treasure. Click "Camera" Or "Gallery".',
   noneMap: 'You should inputed a your treasure location. Click "Map" button, and confirm location.',
   invalidTreasures: 'We can\'t find treasures informations for unknown reasons. Try again.',
+  invalideSelectedTreasure: 'We can\'t find selected treasure for unknown reasons. Try again.'
 };
 
 module.exports = { errorMsg };

@@ -17,4 +17,14 @@ const checkValidation = (response) => {
   return { result: 'ok' };
 };
 
-module.exports = { checkValidation };
+const processTreasureList = (treasures) => {
+  const result = [];
+  treasures.forEach(info => {
+    const { name, expiration, country, registered_by: { _id } } = info;
+    const treasureInfo = { name, expiration, country, registered_by: _id };
+    result.push(treasureInfo);
+  });
+  return result;
+};
+
+module.exports = { checkValidation, processTreasureList };
