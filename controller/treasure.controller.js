@@ -1,7 +1,7 @@
 const Treasure = require('../models/Treasures');
 const { errorMsg } = require('../constants');
 const { getImgUrl } = require('../middlewares/uploadImg');
-const { checkValidation, processTreasureList, processSelectedTreasure } = require('../util');
+const { checkValidation, processTreasureList } = require('../util');
 
 exports.saveTreasures = async(req, res) => {
   try {
@@ -32,13 +32,14 @@ exports.getTreasures = async(req, res) => {
   try {
     const today = new Date().getTime();
     const { country, category } = req.query;
-    let treasures = await Treasure.find({ 'expiration': { $gte: today } }).populate('registered_by');
+    let treasures
+      = await Treasure.find({ expiration: { $gte: today }, is_hunting: { $ne: true } }).populate('registered_by');
     if (!treasures) return res.status(404).json({ result: 'ng', errMessage: errorMsg.invalidTreasures });
 
     if (country !== 'all') {
-      treasures = await Treasure.find({ country, 'expiration': { $gte: today } }).populate('registered_by');
+      treasures = await Treasure.find({ country, expiration: { $gte: today }, is_hunting: { $ne: true } }).populate('registered_by');
     } else if (category !== 'all') {
-      treasures = await Treasure.find({ category, 'expiration': { $gte: today } }).populate('registered_by');
+      treasures = await Treasure.find({ category, 'expiration': { $gte: today }, is_hunting: { $ne: true } }).populate('registered_by');
     }
 
     treasures = processTreasureList(treasures);
@@ -54,6 +55,20 @@ exports.getSelectedTreasure = async(req, res) => {
     const treasure = await Treasure.findById({ _id: treasureId }).populate('registered_by', 'name');
     if (!treasure) return res.status(404).json({ result: 'ng', errMessage: errorMsg.invalideSelectedTreasure });
 
+    return res.status(200).send(treasure);
+  } catch(err) {
+    return res.status(404).json({ result: 'ng', errMessage: errorMsg.generalError });
+  }
+};
+
+exports.updateTreasure = async(req, res) => {
+  try {
+    const treasureId = req.params.treasure_id;
+    const treasure = await Treasure.findById({ _id: treasureId }).populate('registered_by', 'name');
+    if (!treasure) return res.status(404).json({ result: 'ng', errMessage: errorMsg.invalideSelectedTreasure });
+
+    treasure.is_hunting = true;
+    await treasure.save();
     return res.status(200).send(treasure);
   } catch(err) {
     return res.status(404).json({ result: 'ng', errMessage: errorMsg.generalError });
