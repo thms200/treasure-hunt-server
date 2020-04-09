@@ -68,6 +68,7 @@ exports.updateTreasure = async(req, res) => {
     if (!treasure) return res.status(404).json({ result: 'ng', errMessage: errorMsg.invalideSelectedTreasure });
 
     treasure.is_hunting = true;
+    treasure.taken_by = res.locals.userInfo.id;
     await treasure.save();
     return res.status(200).send(treasure);
   } catch(err) {

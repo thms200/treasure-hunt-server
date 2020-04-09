@@ -46,6 +46,10 @@ const treasureSchema = new mongoose.Schema({
     type: Boolean,
     required: true,
   },
+  taken_by: {
+    type: mongoose.ObjectId,
+    ref: 'User'
+  },
 });
 
 module.exports = mongoose.model('Treasure', treasureSchema);
