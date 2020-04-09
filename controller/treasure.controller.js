@@ -32,14 +32,25 @@ exports.getTreasures = async(req, res) => {
   try {
     const today = new Date().getTime();
     const { country, category } = req.query;
-    let treasures
-      = await Treasure.find({ expiration: { $gte: today }, is_hunting: { $ne: true } }).populate('registered_by');
+    let treasures =
+      await Treasure
+        .find({ expiration: { $gte: today }, is_hunting: { $ne: true } })
+        .populate('registered_by')
+        .sort('expiration');
     if (!treasures) return res.status(404).json({ result: 'ng', errMessage: errorMsg.invalidTreasures });
 
     if (country !== 'all') {
-      treasures = await Treasure.find({ country, expiration: { $gte: today }, is_hunting: { $ne: true } }).populate('registered_by');
+      treasures =
+        await Treasure
+          .find({ country, expiration: { $gte: today }, is_hunting: { $ne: true } })
+          .populate('registered_by')
+          .sort('expiration');
     } else if (category !== 'all') {
-      treasures = await Treasure.find({ category, 'expiration': { $gte: today }, is_hunting: { $ne: true } }).populate('registered_by');
+      treasures =
+        await Treasure
+          .find({ category, 'expiration': { $gte: today }, is_hunting: { $ne: true } })
+          .populate('registered_by')
+          .sort('expiration');
     }
 
     treasures = processTreasureList(treasures);
