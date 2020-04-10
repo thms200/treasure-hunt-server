@@ -22,8 +22,9 @@ exports.getLoginOrSignup = async(req, res) => {
       payload.picture = user.picture_url;
       payload.id = user._id;
     }
+    const userInfo = { name, picture: picture_url };
     const token = jwt.sign(payload, secretKey, options);
-    return res.status(201).json({ result: 'ok', token });
+    return res.status(201).json({ result: 'ok', token, userInfo });
   } catch(err) {
     return res.status(400).json({ result: 'ng', errMessage: errorMsg.invalidLogin });
   }
