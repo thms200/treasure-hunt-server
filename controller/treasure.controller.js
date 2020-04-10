@@ -77,6 +77,10 @@ exports.updateTreasure = async(req, res) => {
     const treasureId = req.params.treasure_id;
     const treasure = await Treasure.findById({ _id: treasureId }).populate('registered_by', 'name');
     if (!treasure) return res.status(404).json({ result: 'ng', errMessage: errorMsg.invalideSelectedTreasure });
+    const loginUser = res.locals.userInfo.id;
+    const registeredUser = treasure.registered_by._id;
+    const isSameUser = loginUser === registeredUser.toString();
+    if (isSameUser) return res.status(400).json({ result: 'ng', errMessage: errorMsg.duplicate });
 
     treasure.is_hunting = true;
     treasure.taken_by = res.locals.userInfo.id;
