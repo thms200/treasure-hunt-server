@@ -1,6 +1,8 @@
 const jwt = require('jsonwebtoken');
 const User = require('../models/Users');
+const Treasure = require('../models/Treasures');
 const { errorMsg } = require('../constants');
+const { processTreasureList } = require('../util');
 
 exports.getLoginOrSignup = async(req, res) => {
   try {
@@ -40,5 +42,29 @@ exports.getAuth = async(req, res) => {
     const { name } = err;
     if (name === 'TokenExpiredError') return res.status(400).json({ result: 'ng', errMessage: errorMsg.tokenExpired });
     if (name === 'JsonWebTokenError' || name === 'NotBeforeError') return res.status(400).json({ result: 'ng', errMessage: errorMsg.invalidToken });
+  }
+};
+
+exports.getUserTreasures = async(req, res) => {
+  try {
+    const userId = req.params.user_id;
+    let treasures = await Treasure.find({ registered_by: { $in: [ `${userId}`] } }).sort('expiration');
+    if (!treasures) return res.status(404).json({ result: 'ng', errMessage: errorMsg.invalidTreasures });
+    treasures = processTreasureList(treasures, userId);
+    return res.status(200).send(treasures);
+  } catch(err) {
+    return res.status(404).json({ result: 'ng', errMessage: errorMsg.generalError });
+  }
+};
+
+exports.getUserHuntings = async(req, res) => {
+  try {
+    const userId = req.params.user_id;
+    let treasures = await Treasure.find({ taken_by: { $in: [ `${userId}`] } }).sort('expiration');
+    if (!treasures) return res.status(404).json({ result: 'ng', errMessage: errorMsg.invalidTreasures });
+    treasures = processTreasureList(treasures);
+    return res.status(200).send(treasures);
+  } catch(err) {
+    return res.status(404).json({ result: 'ng', errMessage: errorMsg.generalError });
   }
 };
