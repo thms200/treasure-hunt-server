@@ -22,9 +22,8 @@ exports.getLoginOrSignup = async(req, res) => {
       payload.picture = user.picture_url;
       payload.id = user._id;
     }
-    const userInfo = { name, picture: picture_url };
     const token = jwt.sign(payload, secretKey, options);
-    return res.status(201).json({ result: 'ok', token, userInfo });
+    return res.status(201).json({ result: 'ok', token, userInfo: payload });
   } catch(err) {
     return res.status(400).json({ result: 'ng', errMessage: errorMsg.invalidLogin });
   }
@@ -36,9 +35,7 @@ exports.getAuth = async(req, res) => {
     if (!token) return res.status(400).json({ result: 'ng', errMessage: errorMsg.invalidLogin });
     const secretKey = process.env.SECRET_KEY;
     const payload = await jwt.verify(token, secretKey);
-    const { name, picture } = payload;
-    const userInfo = { name, picture };
-    return res.status(200).json({ result: 'ok', token, userInfo });
+    return res.status(200).json({ result: 'ok', token, userInfo: payload });
   } catch(err) {
     const { name } = err;
     if (name === 'TokenExpiredError') return res.status(400).json({ result: 'ng', errMessage: errorMsg.tokenExpired });
