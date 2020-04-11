@@ -20,8 +20,8 @@ const checkValidation = (response) => {
 const processTreasureList = (treasures) => {
   const result = [];
   treasures.forEach(info => {
-    const { name, expiration, country, _id } = info;
-    const treasureInfo = { name, expiration, country, id: _id };
+    const { name, expiration, country, _id, is_hunting } = info;
+    const treasureInfo = { name, expiration, country, id: _id, is_hunting };
     result.push(treasureInfo);
   });
   return result;
