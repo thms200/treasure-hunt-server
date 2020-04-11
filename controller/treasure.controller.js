@@ -63,7 +63,11 @@ exports.getTreasures = async(req, res) => {
 exports.getSelectedTreasure = async(req, res) => {
   try {
     const treasureId = req.params.treasure_id;
-    const treasure = await Treasure.findById({ _id: treasureId }).populate('registered_by', 'name');
+    const treasure =
+      await Treasure
+        .findById({ _id: treasureId })
+        .populate('registered_by', 'name')
+        .populate('taken_by', 'name');
     if (!treasure) return res.status(404).json({ result: 'ng', errMessage: errorMsg.invalideSelectedTreasure });
 
     return res.status(200).send(treasure);
@@ -75,12 +79,20 @@ exports.getSelectedTreasure = async(req, res) => {
 exports.updateTreasure = async(req, res) => {
   try {
     const treasureId = req.params.treasure_id;
-    const treasure = await Treasure.findById({ _id: treasureId }).populate('registered_by', 'name');
+    const treasure =
+      await Treasure
+        .findById({ _id: treasureId })
+        .populate('registered_by', 'name');
     if (!treasure) return res.status(404).json({ result: 'ng', errMessage: errorMsg.invalideSelectedTreasure });
+
     const loginUser = res.locals.userInfo.id;
-    const registeredUser = treasure.registered_by._id;
-    const isSameUser = loginUser === registeredUser.toString();
+    const { expiration, registered_by: { _id } } = treasure;
+
+    const isSameUser = loginUser === _id.toString();
     if (isSameUser) return res.status(400).json({ result: 'ng', errMessage: errorMsg.duplicate });
+
+    const isExpired = new Date().getTime() > expiration;
+    if (isExpired) return res.status(400).json({ result: 'ng', errMessage: errorMsg.invalidDate });
 
     treasure.is_hunting = true;
     treasure.taken_by = res.locals.userInfo.id;
