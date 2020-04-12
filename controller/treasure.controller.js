@@ -1,6 +1,6 @@
 const Treasure = require('../models/Treasures');
 const { errorMsg } = require('../constants');
-const { getImgUrl } = require('../middlewares/uploadImg');
+const { getImgUrl, deleteImg } = require('../middlewares/uploadImg');
 const { checkValidation, processTreasureList } = require('../util');
 
 exports.saveTreasures = async(req, res) => {
@@ -84,10 +84,9 @@ exports.updateTreasure = async(req, res) => {
         .findById({ _id: treasureId })
         .populate('registered_by', 'name');
     if (!treasure) return res.status(404).json({ result: 'ng', errMessage: errorMsg.invalideSelectedTreasure });
-
-    const loginUser = res.locals.userInfo.id;
     const { expiration, registered_by: { _id } } = treasure;
 
+    const loginUser = res.locals.userInfo.id;
     const isSameUser = loginUser === _id.toString();
     if (isSameUser) return res.status(400).json({ result: 'ng', errMessage: errorMsg.duplicate });
 
@@ -98,6 +97,30 @@ exports.updateTreasure = async(req, res) => {
     treasure.taken_by = res.locals.userInfo.id;
     await treasure.save();
     return res.status(200).send(treasure);
+  } catch(err) {
+    return res.status(404).json({ result: 'ng', errMessage: errorMsg.generalError });
+  }
+};
+
+exports.deleteTreasure = async(req, res) => {
+  try {
+    const treasureId = req.params.treasure_id;
+    const treasure =
+      await Treasure
+        .findById({ _id: treasureId })
+        .populate('registered_by', 'name');
+    if (!treasure) return res.status(404).json({ result: 'ng', errMessage: errorMsg.invalideSelectedTreasure });
+    const { location_pictures_url, registered_by: { _id } } = treasure;
+
+    const loginUser = res.locals.userInfo.id;
+    const isSameUser = loginUser === _id.toString();
+    if (!isSameUser) return res.status(400).json({ result: 'ng', errMessage: errorMsg.invalidDeleteUser });
+
+    await deleteImg(location_pictures_url);
+    const deleted = await Treasure.deleteOne({ _id: treasureId });
+    if (deleted.ok !== 1) return res.status(400).json({ result: 'ng', errMessage: errorMsg.failDelete });
+
+    return res.status(200).send({ result: 'ok' });
   } catch(err) {
     return res.status(404).json({ result: 'ng', errMessage: errorMsg.generalError });
   }

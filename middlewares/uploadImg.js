@@ -25,4 +25,14 @@ const uploadImg = multer({
 
 const getImgUrl = (imgsInfo) => imgsInfo.map((img) => img.location);
 
-module.exports = { uploadImg, getImgUrl };
+const deleteImg = async(urlList) => {
+  const array = urlList.map((url) => {
+    const Key = url.split('/')[url.split('/').length - 1];
+    const params = { Bucket: 'my-treasure-hunt', Key };
+    return s3.deleteObject(params).promise();
+  });
+
+  return Promise.all(array);
+};
+
+module.exports = { uploadImg, getImgUrl, deleteImg };

@@ -19,6 +19,9 @@ const errorMsg = {
   invalidTreasures: 'We can\'t find treasures informations for unknown reasons. Try again.',
   invalideSelectedTreasure: 'We can\'t find selected treasure for unknown reasons. Try again.',
   duplicate: 'You can\'t take the treasure you registered for.',
+  invalidDate: 'The expiration date has passed.',
+  invalidDeleteUser: 'You can delete the treasure you registered for.',
+  failDelete: 'We can\t delete for unknown reasons.',
 };
 
 module.exports = { errorMsg };
