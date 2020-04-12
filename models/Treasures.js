@@ -27,24 +27,28 @@ const treasureSchema = new mongoose.Schema({
     required: true,
   },
   expiration: {
-    type: String,
+    type: Number,
     required: true,
   },
   location: {
     type: Array,
     required: true,
   },
-  location_picture_url: {
-    type: String,
+  location_pictures_url: {
+    type: Array,
     required: true,
   },
   description: {
-    type: Array,
+    type: String,
     required: true,
   },
   is_hunting: {
     type: Boolean,
     required: true,
+  },
+  taken_by: {
+    type: mongoose.ObjectId,
+    ref: 'User'
   },
 });
 

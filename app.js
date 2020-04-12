@@ -1,11 +1,13 @@
 require('dotenv').config();
 const express = require('express');
+const cors = require('cors');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const createError = require('http-errors');
 const { errorMsg } = require('./constants');
 
 const app = express();
+app.use(cors());
 
 mongoose.connect(process.env.ATLAS_URI, {
   useNewUrlParser: true,
@@ -30,7 +32,7 @@ app.use((req, res, next) => {
 app.use((err, req, res) => {
   res.status(err.status || 500);
   const errMessage = err.message || errorMsg.generalError;
-  res.json({ errMessage });
+  res.send({ errMessage });
 });
 
 module.exports = app;

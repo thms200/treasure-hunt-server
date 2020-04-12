@@ -57,5 +57,8 @@ module.exports = {
         "ignoreComments": true
       }
     ],
+    "space-before-function-paren":[
+      "error", "never"
+    ],
   }
 };
