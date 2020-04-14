@@ -11,7 +11,7 @@ exports.saveTreasures = async(req, res) => {
     const location = [latitude, longitude];
     const location_pictures_url = getImgUrl(req.files);
     if (!location_pictures_url.length) return res.status(400).json({ result: 'ng', errMessage: errorMsg.invalidImgs });
-    await Treasure.create({
+    const newTreasure = await Treasure.create({
       registered_by: res.locals.userInfo.id,
       country,
       category,
@@ -22,7 +22,7 @@ exports.saveTreasures = async(req, res) => {
       description,
       is_hunting,
     });
-    return res.status(201).json({ result: 'ok' });
+    return res.status(201).json({ result: 'ok', id: newTreasure._id });
   } catch(err) {
     return res.status(404).json({ result: 'ng', errMessage: errorMsg.invalidSave });
   }
