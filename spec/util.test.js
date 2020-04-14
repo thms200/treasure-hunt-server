@@ -68,7 +68,7 @@ describe('<function checkValidation>', () => {
   });
 });
 
-describe('<function checkValidation>', () => {
+describe('<function processTreasureList>', () => {
   const mockExpi = new Date().getTime() + 10000000;
   const mockData = [{
     _id: 'lajekxkw3ke12',

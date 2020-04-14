@@ -39,7 +39,7 @@ exports.getAuth = async(req, res) => {
   } catch(err) {
     const { name } = err;
     if (name === 'TokenExpiredError') return res.status(400).json({ result: 'ng', errMessage: errorMsg.tokenExpired });
-    if (name === 'JsonWebTokenError' || name === 'NotBeforeError') return res.status(400).json({ result: 'ng', errMessage: errorMsg.invalidToken });
+    res.status(400).json({ result: 'ng', errMessage: errorMsg.invalidToken });
   }
 };
 
