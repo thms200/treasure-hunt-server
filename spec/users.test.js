@@ -162,7 +162,7 @@ describe('<ensureAuthenticated>', function() {
   
     it('should respond "ng", if userId is invalid', done => {
       request(app)
-        .get(`/api/users/invalid_userID/treasures`)
+        .get('/api/users/invalid_userID/treasures')
         .set('x-access-token', `Bearer ${token}`)
         .expect('Content-Type', /json/)
         .expect(404)
@@ -191,7 +191,7 @@ describe('<ensureAuthenticated>', function() {
   
     it('should respond "ng", if userId is invalid', done => {
       request(app)
-        .get(`/api/users/invalid_userID/huntings`)
+        .get('/api/users/invalid_userID/huntings')
         .set('x-access-token', `Bearer ${token}`)
         .expect('Content-Type', /json/)
         .expect(404)
@@ -202,4 +202,3 @@ describe('<ensureAuthenticated>', function() {
     });
   });
 });
-
