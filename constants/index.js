@@ -22,6 +22,7 @@ const errorMsg = {
   invalidDate: 'The expiration date has passed.',
   invalidDeleteUser: 'You can delete the treasure you registered for.',
   failDelete: 'We can\t delete for unknown reasons.',
+  failImageSize: 'Images can be uploaded up to 10MByte.',
 };
 
 module.exports = { errorMsg };

@@ -24,6 +24,7 @@ exports.saveTreasures = async(req, res) => {
     });
     return res.status(201).json({ result: 'ok', id: newTreasure._id });
   } catch(err) {
+    if(err.status === 413) return res.status(413).json({ result: 'ng', errMessage: errorMsg.failImageSize });
     return res.status(404).json({ result: 'ng', errMessage: errorMsg.invalidSave });
   }
 };
