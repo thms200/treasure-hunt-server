@@ -84,12 +84,6 @@ describe('<ensureAuthenticated>', function() {
 
   describe('<POST /api/treasures> + <DELETE /api/treasures/:treasure_id>', function() {
     this.timeout(10000);
-    const testImageUrls = [
-      'https://my-treasure-hunt.s3.ap-northeast-2.amazonaws.com/exampe1',
-      'https://my-treasure-hunt.s3.ap-northeast-2.amazonaws.com/exampl2',
-      'https://my-treasure-hunt.s3.ap-northeast-2.amazonaws.com/exampl3',
-    ];
-
     const filepath1 = `${__dirname}/images/example1.jpg`;
     const filepath2 = `${__dirname}/images/example2.jpg`;
     const filepath3 = `${__dirname}/images/example3.jpg`;
