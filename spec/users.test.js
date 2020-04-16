@@ -34,7 +34,7 @@ describe('<POST /api/users/login>', function() {
   });
 
   it('should add new user if non-joined user login, and should respond with token, userInfo.', done => {
-    after(async () => {
+    after(async() => {
       await User.deleteOne({ email: 'testcode@code.com' });
     });
     request(app)
@@ -48,7 +48,7 @@ describe('<POST /api/users/login>', function() {
       .expect(201)
       .end(async(err, res) => {
         if (err) return done(err);
-        const { result, userInfo, token } = res.body;
+        const { result, userInfo } = res.body;
         expect(result).to.eql('ok');
         const newUser = await User.findOne({ email: 'testcode@code.com' });
         expect(newUser.name).to.eql(userInfo.name);
@@ -110,14 +110,14 @@ describe('<POST /api/users/auth>', function() {
 
   it('should respond "ng", If token is nothing', done => {
     request(app)
-    .post('/api/users/auth')
-    .expect('Content-Type', /json/)
-    .expect(400)
-    .end((err, res) => {
-      if (err) return done(err);
-      expect(res.body.result).to.eql('ng');
-      done();
-    });
+      .post('/api/users/auth')
+      .expect('Content-Type', /json/)
+      .expect(400)
+      .end((err, res) => {
+        if (err) return done(err);
+        expect(res.body.result).to.eql('ng');
+        done();
+      });
   });
 });
 
