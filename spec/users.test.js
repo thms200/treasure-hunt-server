@@ -120,6 +120,7 @@ describe('<POST /api/users/auth>', function() {
     });
   });
 });
+
 describe('<ensureAuthenticated>', function() {
   let token = '';
   let userId = '';
