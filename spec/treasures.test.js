@@ -4,6 +4,7 @@ const app = require('../app');
 const Treasure = require('../models/Treasures');
 
 describe('<ensureAuthenticated>', function() {
+  this.timeout(10000);
   let token = '';
   let userId = '';
   before((done) => {
