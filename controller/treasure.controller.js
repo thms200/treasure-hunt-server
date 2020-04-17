@@ -111,10 +111,11 @@ exports.deleteTreasure = async(req, res) => {
         .findById({ _id: treasureId })
         .populate('registered_by', 'name');
     if (!treasure) return res.status(404).json({ result: 'ng', errMessage: errorMsg.invalideSelectedTreasure });
-    const { location_pictures_url, registered_by: { _id } } = treasure;
+    const { location_pictures_url, registered_by: { _id }, is_hunting } = treasure;
 
     const loginUser = res.locals.userInfo.id;
     const isSameUser = loginUser === _id.toString();
+    if (is_hunting) return res.status(400).json({ result: 'ng', errMessage: failTakenTreasure });
     if (!isSameUser) return res.status(400).json({ result: 'ng', errMessage: errorMsg.invalidDeleteUser });
 
     await deleteImg(location_pictures_url);

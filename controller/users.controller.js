@@ -32,7 +32,6 @@ exports.getLoginOrSignup = async(req, res) => {
 exports.getAuth = async(req, res) => {
   try {
     const token = req.headers['x-access-token'].split('Bearer')[1].trim();
-    if (!token) return res.status(400).json({ result: 'ng', errMessage: errorMsg.invalidLogin });
     const secretKey = process.env.SECRET_KEY;
     const payload = await jwt.verify(token, secretKey);
     return res.status(200).json({ result: 'ok', token, userInfo: payload });

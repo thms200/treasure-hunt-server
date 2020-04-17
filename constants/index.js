@@ -12,7 +12,7 @@ const errorMsg = {
   noneCountry: 'There isn\'t a selected country. Try again.',
   noneName: 'There isn\'t a treasure name. Try again.',
   invalidExpiration: 'Try again. Expiration must be later than now',
-  noneLocation: 'We can\t get a treasure location Try again',
+  noneLocation: 'We can\'t get a treasure location Try again',
   noneDescription: 'Let me know about your treasure. Anything!.',
   nonePictures: 'You should take pictures about location of treasure. Click "Camera" Or "Gallery".',
   noneMap: 'You should inputed a your treasure location. Click "Map" button, and confirm location.',
@@ -21,7 +21,8 @@ const errorMsg = {
   duplicate: 'You can\'t take the treasure you registered for.',
   invalidDate: 'The expiration date has passed.',
   invalidDeleteUser: 'You can delete the treasure you registered for.',
-  failDelete: 'We can\t delete for unknown reasons.',
+  failDelete: 'We can\'t delete for unknown reasons.',
+  failTakenTreasure: 'We can\'t delete treasure is taken',
   failImageSize: 'Images can be uploaded up to 10MByte.',
 };
 
