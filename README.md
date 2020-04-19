@@ -1,5 +1,16 @@
 # Treasue Hunt
 
+## Introduction
+
+여행을 다녀온 후 더이상 사용하지 않는 유심, 교통카드, 입장권 등을 '보물찾기' 형식으로 나눔할 수 있는 Android 어플리케이션입니다.
+
+<div>
+<img src="https://user-images.githubusercontent.com/48754671/79684777-f49a7c80-826e-11ea-80ca-fdc122dd5cbe.gif" />
+<img src="https://user-images.githubusercontent.com/48754671/79684811-37f4eb00-826f-11ea-8ae1-b3eb688a7f20.gif" />
+<img src="https://user-images.githubusercontent.com/48754671/79685026-98385c80-8270-11ea-83d5-791fae248129.gif" />
+</div>
+
+
 ## Contents
 
 * [Introduction](https://github.com/thms200/treasure-hunt-server#introduction)
@@ -10,11 +21,6 @@
 * [Control](https://github.com/thms200/treasure-hunt-server#control)
 * [Challenges](https://github.com/thms200/treasure-hunt-server#challenges)
 * [Things to Do](https://github.com/thms200/treasure-hunt-server#things-to-do)
-
-
-## Introduction
-
-여행을 다녀온 후 더이상 사용하지 않는 유심, 교통카드, 입장권 등을 '보물찾기' 형식으로 나눔할 수 있는 Android 어플리케이션입니다.
 
 
 ## Feature
@@ -127,17 +133,18 @@ AWS_SECRET_ACCESS_KEY = <YOUR AWS SECRET ACCSS KEY>
    - A Page -> B Page -> A Page로 되돌아올 때, 화면에 마지막 State가 초기화 되지 않고 남아 있었습니다. \
      왜냐하면 기존 Web과 React Native의 Lift Cycle이 달라서 Unmount되지 않았기 때문입니다. \
      Web에서는 페이지를 이동하면 전 페이지가 Unmount 되는데, 앱에서는 Unmonut 되지 않고 Stack에 쌓여 있는 구조입니다.\
-     React Navigation의 'focus' Event를 활용하여 유저가 다른 페이지에서 되돌아오면 다시 Fetch 요청을 해서 Mount되는 조건과 동일하게 구현하였습니다.
+     React Navigation의 'focus' Event를 활용하여 유저가 다른 페이지에서 되돌아오면 다시 Fetch 요청을 해서 \
+     Mount되는 조건과 동일하게 구현하였습니다.
 
  * App Build 및 배포
    - 배포 과정에서 해야하는 다양한 설정과 관련된 여러 가지 프로그램 or 모듈을 설치하는 과정이 쉽지 않았습니다. 
   
-   - 배포를 위해 가장 선행되어야 하는 과정은 앱 Build 입니다. 그러나 build한 app을 설치하여 실행해 보면 splash 페이지까지만 \
-     나오고 종료되는 에러가 지속 발생하였습니다. \
+   - 배포를 위해 가장 선행되어야 하는 과정은 앱 Build 입니다. 
+     그러나 build한 app을 설치하여 실행해 보면 splash 페이지까지만 나오고 종료되는 에러가 지속 발생하였습니다. \
      빌드한 앱에 대한 디버깅 방법이 어려워서 발생하는 원인을 정확히 확인하지 못한채 공식문서, stackover flow, 블로그에서 \
      나온 여러 가지 방법을 적용하다보니 시간이 많이 소요되었습니다. \
-     그 중 환경 변수 설정을 위해 __DEV__를 활용한 부분에서 staging or production mode에서는 아무런 값이 적용되지 않는 오류를 발견했고, \
-     이 부분을 수정하여 앱 Build에 성공할 수 있었습니다.
+     그 중 환경 변수 설정을 위해 __DEV__를 활용한 부분에서 staging or production mode에서는 어떤 값도 적용되지 않는 \
+     오류를 발견했고, 이 부분을 수정하여 앱 Build에 성공할 수 있었습니다.
 
    - AWS EB을 이용해 서버를 배포한 뒤 treasure를 등록하는 페이지에서 413 error(request entity too large)가 지속 발생하였습니다.\
      AWS는 웹 서버인 nginx를 사용하고 있는데, nginx는 업로드하는 파일의 크기를 1MB로 제한하고 있습니다. \
