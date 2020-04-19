@@ -111,7 +111,8 @@ AWS_SECRET_ACCESS_KEY = <YOUR AWS SECRET ACCSS KEY>
 ## Deployment
 
 ### Client
-* Google Play Store (진행 중)
+* [Download apk](https://drive.google.com/open?id=1q8cBekyx3GrfTzwyRdbkS1QdjfFSg_iq)
+  * test user : ken_ksjczjt_test@tfbnw.net, password : ken1234! 
 
 ### Server
 * Circle CI (continuous integration)
