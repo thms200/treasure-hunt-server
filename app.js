@@ -2,6 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
+const path = require('path');
 const mongoose = require('mongoose');
 const createError = require('http-errors');
 const { errorMsg } = require('./constants');
@@ -24,6 +25,10 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use('/api/users', require('./routes/users'));
 app.use('/api/treasures', require('./routes/treasures'));
+app.use('/static', express.static(__dirname + '/public'));
+app.use('/', (req, res) => {
+  res.send('connect!!!!');
+});
 
 app.use((req, res, next) => {
   next(createError(404), errorMsg.invalidUrl);

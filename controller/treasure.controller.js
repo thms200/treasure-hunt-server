@@ -115,7 +115,7 @@ exports.deleteTreasure = async(req, res) => {
 
     const loginUser = res.locals.userInfo.id;
     const isSameUser = loginUser === _id.toString();
-    if (is_hunting) return res.status(400).json({ result: 'ng', errMessage: failTakenTreasure });
+    if (is_hunting) return res.status(400).json({ result: 'ng', errMessage: errorMsg.failTakenTreasure });
     if (!isSameUser) return res.status(400).json({ result: 'ng', errMessage: errorMsg.invalidDeleteUser });
 
     await deleteImg(location_pictures_url);
