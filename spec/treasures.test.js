@@ -88,6 +88,7 @@ describe('<ensureAuthenticated>', function() {
     const filepath1 = `${__dirname}/images/example1.jpg`;
     const filepath2 = `${__dirname}/images/example2.jpg`;
     const filepath3 = `${__dirname}/images/example3.jpg`;
+    const expiration = new Date().getTime() + 100000000;
 
     it('should save new treasure, and should delete selected treasure', done => {
       request(app)
@@ -97,7 +98,7 @@ describe('<ensureAuthenticated>', function() {
         .field('country', 'Korea')
         .field('category', 'usim')
         .field('name', 'test')
-        .field('expiration', 1588518000000)
+        .field('expiration', expiration)
         .field('latitude', 30)
         .field('longitude', 100)
         .field('description', 'test description')
@@ -107,6 +108,7 @@ describe('<ensureAuthenticated>', function() {
         .attach('img', filepath3, 'exampl3')
         .expect(201)
         .end(async(err, res) => {
+          console.log(res.body)
           expect(res.body.result).to.eql('ok');
           const newTreasure = await Treasure.findById(res.body.id);
           expect(newTreasure.country).to.eql('Korea');
