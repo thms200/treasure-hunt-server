@@ -98,7 +98,7 @@ describe('<POST /api/users/auth>', function() {
   it('should respond "ng", If token is invalid', done => {
     request(app)
       .post('/api/users/auth')
-      .set('x-access-token', `invalid token`)
+      .set('x-access-token', 'invalid token')
       .expect('Content-Type', /json/)
       .expect(400)
       .end(async(err, res) => {

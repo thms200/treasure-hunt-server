@@ -108,7 +108,6 @@ describe('<ensureAuthenticated>', function() {
         .attach('img', filepath3, 'exampl3')
         .expect(201)
         .end(async(err, res) => {
-          console.log(res.body)
           expect(res.body.result).to.eql('ok');
           const newTreasure = await Treasure.findById(res.body.id);
           expect(newTreasure.country).to.eql('Korea');
@@ -158,7 +157,7 @@ describe('<ensureAuthenticated>', function() {
     this.timeout(10000);
     const treasureId = '5e954c6908f8a4efef4594c3';
     after(async() => {
-      const treasure = await Treasure.findById({ _id: treasureId});
+      const treasure = await Treasure.findById({ _id: treasureId });
       treasure.is_hunting = false;
       await treasure.save();
     });
